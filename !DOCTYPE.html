@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de 21</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .cards {
+            margin: 20px;
+        }
+        .card {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+            font-size: 20px;
+            width: 50px;
+            text-align: center;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo de 21</h1>
+    <div class="cards" id="playerCards"></div>
+    <div id="playerScore"></div>
+    <button onclick="drawCard()">Puxar Carta</button>
+    <button onclick="stopGame()">Parar</button>
+    <div id="message"></div>
+
+    <script>
+        let playerScore = 0;
+        let gameOver = false;
+
+        function drawCard() {
+            if (gameOver) return;
+
+            const cardValue = Math.floor(Math.random() * 11) + 1; // Cartas de 1 a 11
+            playerScore += cardValue;
+
+            const cardElement = document.createElement("div");
+            cardElement.classList.add("card");
+            cardElement.textContent = cardValue;
+            document.getElementById("playerCards").appendChild(cardElement);
+
+            document.getElementById("playerScore").textContent = `Pontuação: ${playerScore}`;
+
+            if (playerScore === 21) {
+                endGame("Parabéns! Você fez 21!");
+            } else if (playerScore > 21) {
+                endGame("Você perdeu! Sua pontuação passou de 21.");
+            }
+        }
+
+        function stopGame() {
+            if (!gameOver) {
+                endGame(`Jogo parado. Sua pontuação final é ${playerScore}.`);
+            }
+        }
+
+        function endGame(message) {
+            gameOver = true;
+            document.getElementById("message").textContent = message;
+        }
+    </script>
+</body>
+</html>
