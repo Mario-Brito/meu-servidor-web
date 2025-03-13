@@ -10,7 +10,7 @@
             font-family: 'Roboto', Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background-color: #f0f8ff; /* Azul claro */
+            background-color: #f0f8ff;
         }
         h1 {
             color: #333;
@@ -19,7 +19,7 @@
             margin: 10px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #4caf50; /* Verde */
+            background-color: #4caf50;
             color: white;
             border: none;
             border-radius: 5px;
@@ -27,8 +27,8 @@
             transition: transform 0.2s, background-color 0.2s;
         }
         button:hover {
-            background-color: #45a049; /* Verde mais escuro */
-            transform: scale(1.1); /* Ampliação leve */
+            background-color: #45a049;
+            transform: scale(1.1);
         }
         .cards {
             margin: 20px;
@@ -43,6 +43,7 @@
             font-size: 20px;
             width: 50px;
             text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
         }
         #playerScore {
             margin-top: 10px;
@@ -53,52 +54,40 @@
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
-            color: #d9534f; /* Vermelho */
+            color: #d9534f;
+            animation: pulse 0.7s infinite;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        @media (max-width: 600px) {
+            .card {
+                width: 40px;
+                font-size: 16px;
+            }
+            button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Jogo de 21</h1>
     <div class="cards" id="playerCards"></div>
-    <div id="playerScore">Pontuação: 0</div>
-    <button onclick="drawCard()">Puxar Carta</button>
-    <button onclick="stopGame()">Parar</button>
-    <div id="message"></div>
-
-    <script>
-        let playerScore = 0;
-        let gameOver = false;
-
-        function drawCard() {
-            if (gameOver) return;
-
-            const cardValue = Math.floor(Math.random() * 11) + 1; // Cartas de 1 a 11
-            playerScore += cardValue;
-
-            const cardElement = document.createElement("div");
-            cardElement.classList.add("card");
-            cardElement.textContent = cardValue;
-            document.getElementById("playerCards").appendChild(cardElement);
-
-            document.getElementById("playerScore").textContent = `Pontuação: ${playerScore}`;
-
-            if (playerScore === 21) {
-                endGame("🎉 Parabéns! Você fez 21!");
-            } else if (playerScore > 21) {
-                endGame("❌ Você perdeu! Sua pontuação passou de 21.");
-            }
-        }
-
-        function stopGame() {
-            if (!gameOver) {
-                endGame(`🛑 Jogo parado. Sua pontuação final é ${playerScore}.`);
-            }
-        }
-
-        function endGame(message) {
-            gameOver = true;
-            document.getElementById("message").textContent = message;
-        }
-    </script>
-</body>
-</html>
+    <div id="playerScore">Pont
