@@ -41,8 +41,8 @@
             border-radius: 5px;
             background-color: #f4f4f4;
             font-size: 20px;
-            width: 50px;
             text-align: center;
+            width: 60px;
             animation: fadeIn 0.5s ease-in-out;
         }
         #playerScore {
@@ -77,7 +77,7 @@
         }
         @media (max-width: 600px) {
             .card {
-                width: 40px;
+                width: 50px;
                 font-size: 16px;
             }
             button {
@@ -91,28 +91,29 @@
     <h1>Jogo de 21</h1>
     <div class="cards" id="playerCards"></div>
     <div id="playerScore">Pontuação: 0</div>
-    <div> 
-        <img src="https://play-lh.googleusercontent.com/rgbyNufFRC9aUJE_Q7I53UVLV-ZSX4-6epifZQf_7m4HQ7UpEQdNcUBCFzLmncNxkg" alt="Imagem do jogo">
-    </div>
     <button onclick="drawCard()">Puxar Carta</button>
     <button onclick="resetGame()">Reiniciar Jogo</button>
     <div id="message"></div>
 
     <script>
-        // Lógica básica do jogo
         let playerScore = 0;
 
         function drawCard() {
-            const cardValue = Math.floor(Math.random() * 11) + 1; // Cartas de 1 a 11
+            const cardValue = Math.floor(Math.random() * 11) + 1; // Valores de 1 a 11
+            const suits = ["♥️", "♠️", "♦️", "♣️"]; // Emojis de naipes
+            const randomSuit = suits[Math.floor(Math.random() * suits.length)]; // Naipe aleatório
             playerScore += cardValue;
 
+            // Criar elemento para exibir a carta
             const cardElement = document.createElement("div");
             cardElement.className = "card";
-            cardElement.textContent = cardValue;
+            cardElement.textContent = `${cardValue} ${randomSuit}`; // Exemplo: "10 ♥️"
             document.getElementById("playerCards").appendChild(cardElement);
 
+            // Atualizar a pontuação
             document.getElementById("playerScore").textContent = `Pontuação: ${playerScore}`;
 
+            // Verificar condições de vitória/derrota
             if (playerScore === 21) {
                 document.getElementById("message").textContent = "Parabéns! Você venceu!";
             } else if (playerScore > 21) {
@@ -122,10 +123,11 @@
 
         function resetGame() {
             playerScore = 0;
-            document.getElementById("playerCards").innerHTML = "";
+            document.getElementById("playerCards").innerHTML = ""; // Limpar cartas
             document.getElementById("playerScore").textContent = "Pontuação: 0";
             document.getElementById("message").textContent = "";
         }
     </script>
 </body>
 </html>
+
