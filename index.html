@@ -36,13 +36,8 @@
         .card {
             display: inline-block;
             margin: 5px;
-            padding: 10px;
-            border: 1px solid #000;
-            border-radius: 5px;
-            background-color: #f4f4f4;
-            font-size: 20px;
-            width: 50px;
-            text-align: center;
+            width: 60px;
+            height: auto;
             animation: fadeIn 0.5s ease-in-out;
         }
         #playerScore {
@@ -78,7 +73,6 @@
         @media (max-width: 600px) {
             .card {
                 width: 40px;
-                font-size: 16px;
             }
             button {
                 padding: 8px 15px;
@@ -91,28 +85,31 @@
     <h1>Jogo de 21</h1>
     <div class="cards" id="playerCards"></div>
     <div id="playerScore">Pontuação: 0</div>
-    <div> 
-        <img src="https://play-lh.googleusercontent.com/rgbyNufFRC9aUJE_Q7I53UVLV-ZSX4-6epifZQf_7m4HQ7UpEQdNcUBCFzLmncNxkg" alt="Imagem do jogo">
-    </div>
     <button onclick="drawCard()">Puxar Carta</button>
     <button onclick="resetGame()">Reiniciar Jogo</button>
     <div id="message"></div>
 
     <script>
-        // Lógica básica do jogo
+        // Lógica do jogo com imagens de cartas
         let playerScore = 0;
 
         function drawCard() {
             const cardValue = Math.floor(Math.random() * 11) + 1; // Cartas de 1 a 11
+            const suits = ["espadas", "copas", "ouros", "paus"]; // Naipes
+            const randomSuit = suits[Math.floor(Math.random() * suits.length)]; // Naipe aleatório
             playerScore += cardValue;
 
-            const cardElement = document.createElement("div");
-            cardElement.className = "card";
-            cardElement.textContent = cardValue;
-            document.getElementById("playerCards").appendChild(cardElement);
+            // Criar elemento de imagem para a carta
+            const cardImage = document.createElement("img");
+            cardImage.src = `imagens/${cardValue}_${randomSuit}.png`; // Exemplo: imagens/5_espadas.png
+            cardImage.alt = `Carta ${cardValue} de ${randomSuit}`;
+            cardImage.className = "card";
+            document.getElementById("playerCards").appendChild(cardImage);
 
+            // Atualizar a pontuação
             document.getElementById("playerScore").textContent = `Pontuação: ${playerScore}`;
 
+            // Verificar condições de vitória/derrota
             if (playerScore === 21) {
                 document.getElementById("message").textContent = "Parabéns! Você venceu!";
             } else if (playerScore > 21) {
@@ -122,7 +119,7 @@
 
         function resetGame() {
             playerScore = 0;
-            document.getElementById("playerCards").innerHTML = "";
+            document.getElementById("playerCards").innerHTML = ""; // Limpar cartas
             document.getElementById("playerScore").textContent = "Pontuação: 0";
             document.getElementById("message").textContent = "";
         }
