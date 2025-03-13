@@ -89,7 +89,44 @@
 </head>
 <body>
     <h1>Jogo de 21</h1>
-   
+    <div class="cards" id="playerCards"></div>
+    <div id="playerScore">Pontuação: 0</div>
     <div> 
-    <img src="https://play-lh.googleusercontent.com/rgbyNufFRC9aUJE_Q7I53UVLV-ZSX4-6epifZQf_7m4HQ7UpEQdNcUBCFzLmncNxkg">
+        <img src="https://play-lh.googleusercontent.com/rgbyNufFRC9aUJE_Q7I53UVLV-ZSX4-6epifZQf_7m4HQ7UpEQdNcUBCFzLmncNxkg" alt="Imagem do jogo">
     </div>
+    <button onclick="drawCard()">Puxar Carta</button>
+    <button onclick="resetGame()">Reiniciar Jogo</button>
+    <div id="message"></div>
+
+    <script>
+        // Lógica básica do jogo
+        let playerScore = 0;
+
+        function drawCard() {
+            const cardValue = Math.floor(Math.random() * 11) + 1; // Cartas de 1 a 11
+            playerScore += cardValue;
+
+            const cardElement = document.createElement("div");
+            cardElement.className = "card";
+            cardElement.textContent = cardValue;
+            document.getElementById("playerCards").appendChild(cardElement);
+
+            document.getElementById("playerScore").textContent = `Pontuação: ${playerScore}`;
+
+            if (playerScore === 21) {
+                document.getElementById("message").textContent = "Parabéns! Você venceu!";
+            } else if (playerScore > 21) {
+                document.getElementById("message").textContent = "Você perdeu! Pontuação maior que 21.";
+            }
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            document.getElementById("playerCards").innerHTML = "";
+            document.getElementById("playerScore").textContent = "Pontuação: 0";
+            document.getElementById("message").textContent = "";
+        }
+    </script>
+</body>
+</html>
+
